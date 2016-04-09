@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace AutoCombine.Core
@@ -40,6 +41,25 @@ namespace AutoCombine.Core
                 {typeof(ushort), new object[] {ushort.MinValue,ushort.MaxValue,null} },
                 {typeof(string), new string[] {"","aString" } },
             };
+        }
+
+        public IEnumerable<T> Combine<T>()
+        {
+            //Get all the propeties from T
+            IEnumerable<PropertyInfo> props = typeof(T).GetProperties();
+            //Get parameterless constructor
+            ConstructorInfo info = typeof(T).GetConstructor(new Type[] { });
+            //Iterate through all combinations
+            foreach (var prop in props)
+            {
+                Type t = prop.PropertyType;
+                foreach (var value in Values[t])
+                {
+                    T obj = (T)info.Invoke(new object[] { });
+                    prop.SetValue(obj, value, null);
+                    yield return obj;
+                }
+            }
         }
     }
 }
