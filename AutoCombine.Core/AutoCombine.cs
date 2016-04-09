@@ -18,7 +18,7 @@ namespace AutoCombine.Core
                 {typeof(byte), new object[] {byte.MinValue,byte.MaxValue } },
                 {typeof(byte?), new object[] {byte.MinValue,byte.MaxValue,null } },
                 {typeof(char), new object[] {char.MinValue,char.MaxValue} },
-                {typeof(char), new object[] {char.MinValue,char.MaxValue, null} },
+                {typeof(char?), new object[] {char.MinValue,char.MaxValue, null} },
                 {typeof(decimal), new object[] {decimal.MinValue,decimal.MinusOne,(decimal)0,decimal.One,decimal.MaxValue} },
                 {typeof(decimal?), new object[] {decimal.MinValue,decimal.MinusOne,(decimal)0,decimal.One,decimal.MaxValue,null} },
                 {typeof(double), new object[] {double.NegativeInfinity,double.MinValue,(double)0,double.MaxValue,double.PositiveInfinity,double.NaN } },
@@ -38,7 +38,7 @@ namespace AutoCombine.Core
                 {typeof(ulong), new object[] {ulong.MinValue,ulong.MaxValue } },
                 {typeof(ulong?), new object[] {ulong.MinValue,ulong.MaxValue, null } },
                 {typeof(ushort), new object[] {ushort.MinValue,ushort.MaxValue} },
-                {typeof(ushort), new object[] {ushort.MinValue,ushort.MaxValue,null} },
+                {typeof(ushort?), new object[] {ushort.MinValue,ushort.MaxValue,null} },
                 {typeof(string), new string[] {"","aString" } },
             };
         }
