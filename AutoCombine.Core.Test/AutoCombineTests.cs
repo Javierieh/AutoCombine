@@ -4,11 +4,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace AutoCombine.Core.Test
 {
     [TestClass]
-    public class UnitTest1
+    public class AutoCombineTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void DefaultCombinerWorksCorrectly()
         {
+
         }
     }
 }
