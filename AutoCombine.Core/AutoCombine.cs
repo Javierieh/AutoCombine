@@ -39,7 +39,7 @@ namespace AutoCombine.Core
                 {typeof(ulong?), new object[] {ulong.MinValue,ulong.MaxValue, null } },
                 {typeof(ushort), new object[] {ushort.MinValue,ushort.MaxValue} },
                 {typeof(ushort?), new object[] {ushort.MinValue,ushort.MaxValue,null} },
-                {typeof(string), new string[] {"","aString" } },
+                {typeof(string), new string[] {"","aString",null } },
             };
         }
 

@@ -21,7 +21,7 @@ namespace AutoCombine.Core.Test.Models
         public float Float { get; set; }
         public float? NullableFloat { get; set; }
         public int Integer { get; set; }
-        public int NullableInteger { get; set; }
+        public int? NullableInteger { get; set; }
         public long Long { get; set; }
         public long? NullableLong { get; set; }
         public sbyte SByte { get; set; }
@@ -34,5 +34,6 @@ namespace AutoCombine.Core.Test.Models
         public ulong? NullableULong { get; set; }
         public ushort UShort { get; set; }
         public ushort? NullableUShort { get; set; }
+        public string String { get; set; }
     }
 }
