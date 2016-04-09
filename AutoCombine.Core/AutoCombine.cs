@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace AutoCombine.Core
@@ -17,7 +18,7 @@ namespace AutoCombine.Core
                 {typeof(byte), new object[] {byte.MinValue,byte.MaxValue } },
                 {typeof(byte?), new object[] {byte.MinValue,byte.MaxValue,null } },
                 {typeof(char), new object[] {char.MinValue,char.MaxValue} },
-                {typeof(char), new object[] {char.MinValue,char.MaxValue, null} },
+                {typeof(char?), new object[] {char.MinValue,char.MaxValue, null} },
                 {typeof(decimal), new object[] {decimal.MinValue,decimal.MinusOne,(decimal)0,decimal.One,decimal.MaxValue} },
                 {typeof(decimal?), new object[] {decimal.MinValue,decimal.MinusOne,(decimal)0,decimal.One,decimal.MaxValue,null} },
                 {typeof(double), new object[] {double.NegativeInfinity,double.MinValue,(double)0,double.MaxValue,double.PositiveInfinity,double.NaN } },
@@ -37,9 +38,28 @@ namespace AutoCombine.Core
                 {typeof(ulong), new object[] {ulong.MinValue,ulong.MaxValue } },
                 {typeof(ulong?), new object[] {ulong.MinValue,ulong.MaxValue, null } },
                 {typeof(ushort), new object[] {ushort.MinValue,ushort.MaxValue} },
-                {typeof(ushort), new object[] {ushort.MinValue,ushort.MaxValue,null} },
-                {typeof(string), new string[] {"","aString" } },
+                {typeof(ushort?), new object[] {ushort.MinValue,ushort.MaxValue,null} },
+                {typeof(string), new string[] {"","aString",null } },
             };
+        }
+
+        public IEnumerable<T> Combine<T>()
+        {
+            //Get all the propeties from T
+            IEnumerable<PropertyInfo> props = typeof(T).GetProperties();
+            //Get parameterless constructor
+            ConstructorInfo info = typeof(T).GetConstructor(new Type[] { });
+            //Iterate through all combinations
+            foreach (var prop in props)
+            {
+                Type t = prop.PropertyType;
+                foreach (var value in Values[t])
+                {
+                    T obj = (T)info.Invoke(new object[] { });
+                    prop.SetValue(obj, value, null);
+                    yield return obj;
+                }
+            }
         }
     }
 }
