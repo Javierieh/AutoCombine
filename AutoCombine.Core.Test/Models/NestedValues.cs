@@ -8,7 +8,6 @@ namespace AutoCombine.Core.Test.Models
 {
     public class NestedValues
     {
-        public string Name { get; set; }
         public Values Values { get; set; }
     }
 }
