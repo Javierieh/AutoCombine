@@ -44,8 +44,37 @@ namespace AutoCombine.Core
 
         public IEnumerable<T> Combine<T>()
         {
+            return Combine(typeof(T)).Cast<T>();
+        }
+
+        private IEnumerable<object> CombineProperty(Type t, PropertyInfo prop, IEnumerable<object> values)
+        {
+            //Get parameterless constructor
+            ConstructorInfo info = t.GetConstructor(new Type[] { });
+            foreach (var value in values)
+            {
+                var obj = info.Invoke(new object[] { });
+                prop.SetValue(obj, value, null);
+                yield return obj;
+            }
+        }
+
+        private IEnumerable<object> CombineProperty(Type t, PropertyInfo prop, Array values)
+        {
+            //Get parameterless constructor
+            ConstructorInfo info = t.GetConstructor(new Type[] { });
+            foreach (var value in values)
+            {
+                var obj = info.Invoke(new object[] { });
+                prop.SetValue(obj, value, null);
+                yield return obj;
+            }
+        }
+
+        private IEnumerable<object> Combine(Type t)
+        {
             //Get all the propeties from T
-            IEnumerable<PropertyInfo> props = typeof(T).GetProperties();
+            IEnumerable<PropertyInfo> props = t.GetProperties();
 
             //Iterate through all combinations
             foreach (var prop in props)
@@ -55,7 +84,7 @@ namespace AutoCombine.Core
                 if (underlyingType != null && underlyingType.IsEnum)
                 {
                     var values = underlyingType.GetEnumValues();
-                    foreach (var obj in CombineProperty<T>(prop, values))
+                    foreach (var obj in CombineProperty(t,prop, values))
                     {
                         yield return obj;
                     }
@@ -63,42 +92,26 @@ namespace AutoCombine.Core
                 else if (type.IsEnum)
                 {
                     var values = type.GetEnumValues();
-                    foreach(var obj in CombineProperty<T>(prop, values))
+                    foreach (var obj in CombineProperty(t,prop, values))
+                    {
+                        yield return obj;
+                    }
+                }
+                else if (type.IsValueType || type == typeof(string))
+                {
+                    foreach (var obj in CombineProperty(t,prop, Values[type]))
                     {
                         yield return obj;
                     }
                 }
                 else
                 {
-                    foreach(var obj in CombineProperty<T>(prop, Values[type]))
+                    var values = Combine(type);
+                    foreach(var obj in CombineProperty(t,prop,values))
                     {
                         yield return obj;
                     }
                 }
-            }
-        }
-
-        private IEnumerable<T> CombineProperty<T>(PropertyInfo prop, IEnumerable<object> values)
-        {
-            //Get parameterless constructor
-            ConstructorInfo info = typeof(T).GetConstructor(new Type[] { });
-            foreach (var value in values)
-            {
-                T obj = (T)info.Invoke(new object[] { });
-                prop.SetValue(obj, value, null);
-                yield return obj;
-            }
-        }
-
-        private IEnumerable<T> CombineProperty<T>(PropertyInfo prop, Array values)
-        {
-            //Get parameterless constructor
-            ConstructorInfo info = typeof(T).GetConstructor(new Type[] { });
-            foreach (var value in values)
-            {
-                T obj = (T)info.Invoke(new object[] { });
-                prop.SetValue(obj, value, null);
-                yield return obj;
             }
         }
     }
