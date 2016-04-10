@@ -8,25 +8,25 @@ namespace AutoCombine.Core.Test
 {
     public class DefaultAutoCombinerTests
     {
-        private AutoCombine combiner;
-        private IEnumerable<Values> items;
+        protected AutoCombine combiner;
+        protected IEnumerable<Values> Items { get; set; }
         public DefaultAutoCombinerTests()
         {
             combiner = new AutoCombine();
-            items = combiner.Combine<Values>();
+            Items = combiner.Combine<Values>();
         }
 
         [Fact]
         public void DefaultValueTypesWork()
         {
-            Assert.True(items.Any());
+            Assert.True(Items.Any());
         }
 
         [Fact]
         public void DefaultBoolCombinerWorks()
         {
             var expected = new HashSet<bool>{ false, true };
-            var values = items.GetDistinct(x => x.Boolean);
+            var values = Items.GetDistinct(x => x.Boolean);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -34,7 +34,7 @@ namespace AutoCombine.Core.Test
         public void DefaultNullableBoolCombinerWorks()
         {
             var expected = new HashSet<bool?>{ false, true, null };
-            var values = items.GetDistinct(x => x.NullableBoolean);
+            var values = Items.GetDistinct(x => x.NullableBoolean);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -42,7 +42,7 @@ namespace AutoCombine.Core.Test
         public void DefaultByteCombinerWorks()
         {
             var expected = new HashSet<byte> { byte.MinValue, byte.MaxValue };
-            var values = items.GetDistinct(x => x.Byte);
+            var values = Items.GetDistinct(x => x.Byte);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -50,7 +50,7 @@ namespace AutoCombine.Core.Test
         public void DefaultNullableByteCombinerWorks()
         {
             var expected = new HashSet<byte?> { byte.MinValue, byte.MaxValue, null };
-            var values = items.GetDistinct(x => x.NullableByte);
+            var values = Items.GetDistinct(x => x.NullableByte);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -58,7 +58,7 @@ namespace AutoCombine.Core.Test
         public void DefaultCharCombinerWorks()
         {
             var expected = new HashSet<char> { char.MinValue, char.MaxValue };
-            var values = items.GetDistinct(x => x.Char);
+            var values = Items.GetDistinct(x => x.Char);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -66,7 +66,7 @@ namespace AutoCombine.Core.Test
         public void DefaultNullableCharCombinerWorks()
         {
             var expected = new HashSet<char?> { char.MinValue, char.MaxValue, null };
-            var values = items.GetDistinct(x => x.NullableChar);
+            var values = Items.GetDistinct(x => x.NullableChar);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -74,7 +74,7 @@ namespace AutoCombine.Core.Test
         public void DefaultDecimalCombinerWorks()
         {
             var expected = new HashSet<decimal> { decimal.MinValue, decimal.MinusOne, (decimal)0, decimal.One, decimal.MaxValue };
-            var values = items.GetDistinct(x => x.Decimal);
+            var values = Items.GetDistinct(x => x.Decimal);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -82,7 +82,7 @@ namespace AutoCombine.Core.Test
         public void DefaultNullableDecimalCombinerWorks()
         {
             var expected = new HashSet<decimal?> { decimal.MinValue, decimal.MinusOne, (decimal)0, decimal.One, decimal.MaxValue, null };
-            var values = items.GetDistinct(x => x.NullableDecimal);
+            var values = Items.GetDistinct(x => x.NullableDecimal);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -90,7 +90,7 @@ namespace AutoCombine.Core.Test
         public void DefaultDoubleCombinerWorks()
         {
             var expected = new HashSet<double> { double.NegativeInfinity, double.MinValue, (double)0, double.MaxValue, double.PositiveInfinity, double.NaN };
-            var values = items.GetDistinct(x => x.Double);
+            var values = Items.GetDistinct(x => x.Double);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -98,7 +98,7 @@ namespace AutoCombine.Core.Test
         public void DefaultNullableDoubleCombinerWorks()
         {
             var expected = new HashSet<double?> { double.NegativeInfinity, double.MinValue, (double)0, double.MaxValue, double.PositiveInfinity, double.NaN, null };
-            var values = items.GetDistinct(x => x.NullableDouble);
+            var values = Items.GetDistinct(x => x.NullableDouble);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -106,7 +106,7 @@ namespace AutoCombine.Core.Test
         public void DefaultFloatCombinerWorks()
         {
             var expected = new HashSet<float> { float.NegativeInfinity, float.MinValue, (float)0, float.MaxValue, float.PositiveInfinity, float.NaN };
-            var values = items.GetDistinct(x => x.Float);
+            var values = Items.GetDistinct(x => x.Float);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -114,7 +114,7 @@ namespace AutoCombine.Core.Test
         public void DefaultNullableFloatCombinerWorks()
         {
             var expected = new HashSet<float?> { float.NegativeInfinity, float.MinValue, (float)0, float.MaxValue, float.PositiveInfinity, float.NaN, null };
-            var values = items.GetDistinct(x => x.NullableFloat);
+            var values = Items.GetDistinct(x => x.NullableFloat);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -122,7 +122,7 @@ namespace AutoCombine.Core.Test
         public void DefaultIntCombinerWorks()
         {
             var expected = new HashSet<int> { int.MinValue, -1, 0, 1, int.MaxValue };
-            var values = items.GetDistinct(x => x.Integer);
+            var values = Items.GetDistinct(x => x.Integer);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -130,7 +130,7 @@ namespace AutoCombine.Core.Test
         public void DefaultNullableIntCombinerWorks()
         {
             var expected = new HashSet<int?> { int.MinValue, -1, 0, 1, int.MaxValue, null };
-            var values = items.GetDistinct(x => x.NullableInteger);
+            var values = Items.GetDistinct(x => x.NullableInteger);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -138,7 +138,7 @@ namespace AutoCombine.Core.Test
         public void DefaultLongCombinerWorks()
         {
             var expected = new HashSet<long> { long.MinValue, (long)0, long.MaxValue };
-            var values = items.GetDistinct(x => x.Long);
+            var values = Items.GetDistinct(x => x.Long);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -146,7 +146,7 @@ namespace AutoCombine.Core.Test
         public void DefaultNullableLongCombinerWorks()
         {
             var expected = new HashSet<long?> { long.MinValue, (long)0, long.MaxValue, null };
-            var values = items.GetDistinct(x => x.NullableLong);
+            var values = Items.GetDistinct(x => x.NullableLong);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -154,7 +154,7 @@ namespace AutoCombine.Core.Test
         public void DefaultSByteCombinerWorks()
         {
             var expected = new HashSet<sbyte> { sbyte.MinValue, (sbyte)0, sbyte.MaxValue };
-            var values = items.GetDistinct(x => x.SByte);
+            var values = Items.GetDistinct(x => x.SByte);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -162,7 +162,7 @@ namespace AutoCombine.Core.Test
         public void DefaultNullableSByteCombinerWorks()
         {
             var expected = new HashSet<sbyte?> { sbyte.MinValue, (sbyte)0, sbyte.MaxValue, null };
-            var values = items.GetDistinct(x => x.NullableSByte);
+            var values = Items.GetDistinct(x => x.NullableSByte);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -170,7 +170,7 @@ namespace AutoCombine.Core.Test
         public void DefaultShortCombinerWorks()
         {
             var expected = new HashSet<short> { short.MinValue, (short)0, short.MaxValue };
-            var values = items.GetDistinct(x => x.Short);
+            var values = Items.GetDistinct(x => x.Short);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -178,7 +178,7 @@ namespace AutoCombine.Core.Test
         public void DefaultNullableShortCombinerWorks()
         {
             var expected = new HashSet<short?> { short.MinValue, (short)0, short.MaxValue, null };
-            var values = items.GetDistinct(x => x.NullableShort);
+            var values = Items.GetDistinct(x => x.NullableShort);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -186,7 +186,7 @@ namespace AutoCombine.Core.Test
         public void DefaultUIntCombinerWorks()
         {
             var expected = new HashSet<uint> { uint.MinValue, uint.MaxValue };
-            var values = items.GetDistinct(x => x.UInt);
+            var values = Items.GetDistinct(x => x.UInt);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -194,7 +194,7 @@ namespace AutoCombine.Core.Test
         public void DefaultNullableUIntCombinerWorks()
         {
             var expected = new HashSet<uint?> { uint.MinValue, uint.MaxValue, null };
-            var values = items.GetDistinct(x => x.NullableUInt);
+            var values = Items.GetDistinct(x => x.NullableUInt);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -202,7 +202,7 @@ namespace AutoCombine.Core.Test
         public void DefaultULongCombinerWorks()
         {
             var expected = new HashSet<ulong> { ulong.MinValue, ulong.MaxValue };
-            var values = items.GetDistinct(x => x.ULong);
+            var values = Items.GetDistinct(x => x.ULong);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -210,7 +210,7 @@ namespace AutoCombine.Core.Test
         public void DefaultNullableULongCombinerWorks()
         {
             var expected = new HashSet<ulong?> { ulong.MinValue, ulong.MaxValue, null };
-            var values = items.GetDistinct(x => x.NullableULong);
+            var values = Items.GetDistinct(x => x.NullableULong);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -218,7 +218,7 @@ namespace AutoCombine.Core.Test
         public void DefaultUShortCombinerWorks()
         {
             var expected = new HashSet<ushort> { ushort.MinValue, ushort.MaxValue };
-            var values = items.GetDistinct(x => x.UShort);
+            var values = Items.GetDistinct(x => x.UShort);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -226,7 +226,7 @@ namespace AutoCombine.Core.Test
         public void DefaultNullableUShortCombinerWorks()
         {
             var expected = new HashSet<ushort?> { ushort.MinValue, ushort.MaxValue, null };
-            var values = items.GetDistinct(x => x.NullableUShort);
+            var values = Items.GetDistinct(x => x.NullableUShort);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -234,7 +234,7 @@ namespace AutoCombine.Core.Test
         public void DefaultStringCombinerWorks()
         {
             var expected = new HashSet<string> { "", "aString", null };
-            var values = items.GetDistinct(x => x.String);
+            var values = Items.GetDistinct(x => x.String);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -242,7 +242,7 @@ namespace AutoCombine.Core.Test
         public void DefaultEnumCombinerWorks()
         {
             var expected = new HashSet<EnumValue> { EnumValue.MinusOne, EnumValue.Zero, EnumValue.One };
-            var values = items.GetDistinct(x => x.EnumValue);
+            var values = Items.GetDistinct(x => x.EnumValue);
             Assert.True(expected.SetEquals(values));
         }
 
@@ -250,7 +250,7 @@ namespace AutoCombine.Core.Test
         public void DefaultNullableEnumCombinerWorks()
         {
             var expected = new HashSet<EnumValue?> { EnumValue.MinusOne, EnumValue.Zero, EnumValue.One, null};
-            var values = items.GetDistinct(x => x.NullableEnumValue);
+            var values = Items.GetDistinct(x => x.NullableEnumValue);
             Assert.True(expected.SetEquals(values));
         }
     }

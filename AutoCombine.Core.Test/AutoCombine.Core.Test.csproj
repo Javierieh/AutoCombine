@@ -71,7 +71,9 @@
   <ItemGroup>
     <Compile Include="DefaultAutoCombinerTests.cs" />
     <Compile Include="Helpers\LinqHelpers.cs" />
+    <Compile Include="Models\NestedValues.cs" />
     <Compile Include="Models\Values.cs" />
+    <Compile Include="NestedAutoCombinerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
