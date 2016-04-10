@@ -237,5 +237,13 @@ namespace AutoCombine.Core.Test
             var values = items.GetDistinct(x => x.String);
             Assert.True(expected.SetEquals(values));
         }
+
+        [Fact]
+        public void DefaultEnumCombinerWorks()
+        {
+            var expected = new HashSet<EnumValue> { EnumValue.MinusOne, EnumValue.Zero, EnumValue.One };
+            var values = items.GetDistinct(x => x.EnumValue);
+            Assert.True(expected.SetEquals(values));
+        }
     }
 }

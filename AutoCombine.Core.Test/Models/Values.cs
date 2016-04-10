@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace AutoCombine.Core.Test.Models
 {
+    public enum EnumValue
+    {
+        MinusOne = -1,
+        One = 1,
+        Zero = 0
+    }
     public class Values
     {
         public bool Boolean { get; set; }
@@ -35,5 +41,6 @@ namespace AutoCombine.Core.Test.Models
         public ushort UShort { get; set; }
         public ushort? NullableUShort { get; set; }
         public string String { get; set; }
+        public EnumValue EnumValue { get; set; }
     }
 }
