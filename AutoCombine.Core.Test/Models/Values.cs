@@ -42,5 +42,6 @@ namespace AutoCombine.Core.Test.Models
         public ushort? NullableUShort { get; set; }
         public string String { get; set; }
         public EnumValue EnumValue { get; set; }
+        public EnumValue? NullableEnumValue { get; set; }
     }
 }

@@ -50,10 +50,19 @@ namespace AutoCombine.Core
             //Iterate through all combinations
             foreach (var prop in props)
             {
-                Type t = prop.PropertyType;
-                if (t.IsEnum)
+                Type type = prop.PropertyType;
+                Type underlyingType = Nullable.GetUnderlyingType(type);
+                if (underlyingType != null && underlyingType.IsEnum)
                 {
-                    var values = t.GetEnumValues();
+                    var values = underlyingType.GetEnumValues();
+                    foreach (var obj in CombineProperty<T>(prop, values))
+                    {
+                        yield return obj;
+                    }
+                }
+                else if (type.IsEnum)
+                {
+                    var values = type.GetEnumValues();
                     foreach(var obj in CombineProperty<T>(prop, values))
                     {
                         yield return obj;
@@ -61,7 +70,7 @@ namespace AutoCombine.Core
                 }
                 else
                 {
-                    foreach(var obj in CombineProperty<T>(prop, Values[t]))
+                    foreach(var obj in CombineProperty<T>(prop, Values[type]))
                     {
                         yield return obj;
                     }
