@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-
 namespace AutoCombine.Core
 {
     public class AutoCombine
@@ -47,18 +46,50 @@ namespace AutoCombine.Core
         {
             //Get all the propeties from T
             IEnumerable<PropertyInfo> props = typeof(T).GetProperties();
-            //Get parameterless constructor
-            ConstructorInfo info = typeof(T).GetConstructor(new Type[] { });
+
             //Iterate through all combinations
             foreach (var prop in props)
             {
                 Type t = prop.PropertyType;
-                foreach (var value in Values[t])
+                if (t.IsEnum)
                 {
-                    T obj = (T)info.Invoke(new object[] { });
-                    prop.SetValue(obj, value, null);
-                    yield return obj;
+                    var values = t.GetEnumValues();
+                    foreach(var obj in CombineProperty<T>(prop, values))
+                    {
+                        yield return obj;
+                    }
                 }
+                else
+                {
+                    foreach(var obj in CombineProperty<T>(prop, Values[t]))
+                    {
+                        yield return obj;
+                    }
+                }
+            }
+        }
+
+        private IEnumerable<T> CombineProperty<T>(PropertyInfo prop, IEnumerable<object> values)
+        {
+            //Get parameterless constructor
+            ConstructorInfo info = typeof(T).GetConstructor(new Type[] { });
+            foreach (var value in values)
+            {
+                T obj = (T)info.Invoke(new object[] { });
+                prop.SetValue(obj, value, null);
+                yield return obj;
+            }
+        }
+
+        private IEnumerable<T> CombineProperty<T>(PropertyInfo prop, Array values)
+        {
+            //Get parameterless constructor
+            ConstructorInfo info = typeof(T).GetConstructor(new Type[] { });
+            foreach (var value in values)
+            {
+                T obj = (T)info.Invoke(new object[] { });
+                prop.SetValue(obj, value, null);
+                yield return obj;
             }
         }
     }
